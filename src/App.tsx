@@ -8,6 +8,14 @@ import { ITask } from './interfaces/Task';
 function App() {
   const [taskList, setTaskList] = useState<ITask[]>([]);
 
+  const deleteTask = (id: number) => {
+    setTaskList(
+      taskList.filter(task => {
+        return task.id !== id
+      })
+    );
+  };
+
   return (
     <div>
       <Header />
@@ -18,7 +26,7 @@ function App() {
         </div>
         <div>
           <h2>Suas tarefas:</h2>
-          <TaskList taskList={taskList} />
+          <TaskList taskList={taskList} handleDelete={deleteTask}/>
         </div>
       </main>
      <Footer />
