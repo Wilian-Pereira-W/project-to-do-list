@@ -7,13 +7,13 @@ interface Props {
   taskList: ITask[],
   setTaskList?: React.Dispatch<React.SetStateAction<ITask[]>>,
   task?: ITask | null
-  handleUpdate?(id: number, title: string, difficulty: number): void
+  handleUpdate?(id: number, title: string, difficulty: string): void
 }
 
 const TaskForm = (props: Props) => {
   const [id, setId] = useState<number>(0);
   const [title, setTitle] = useState<string>('');
-  const [difficulty, setDifficulty] = useState<number>(0);
+  const [difficulty, setDifficulty] = useState<string>('');
 
   useEffect(() => {
     if(props.task) {
@@ -34,7 +34,7 @@ const TaskForm = (props: Props) => {
       props.setTaskList!([...props.taskList, newTask]);
   
       setTitle('');
-      setDifficulty(0);
+      setDifficulty('');
     }
   }
 
@@ -42,7 +42,7 @@ const TaskForm = (props: Props) => {
     if(e.target.name === 'title') {
       setTitle(e.target.value);
     } else {
-      setDifficulty(parseInt(e.target.value));
+      setDifficulty(e.target.value);
     }
   }
 
