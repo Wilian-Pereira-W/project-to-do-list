@@ -5,13 +5,22 @@ import { ITask } from '../../interfaces/Task';
 interface Props {
   btnText: string,
   taskList: ITask[],
-  setTaskList?: React.Dispatch<React.SetStateAction<ITask[]>>
+  setTaskList?: React.Dispatch<React.SetStateAction<ITask[]>>,
+  task?: ITask | null
 }
 
 const TaskForm = (props: Props) => {
   const [id, setId] = useState<number>(0);
   const [title, setTitle] = useState<string>('');
   const [difficulty, setDifficulty] = useState<number>(0);
+
+  useEffect(() => {
+    if(props.task) {
+      setId(props.task.id);
+      setTitle(props.task.title);
+      setDifficulty(props.task.difficulty);
+    }
+  }, [props.task])
 
   const addTaskHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
