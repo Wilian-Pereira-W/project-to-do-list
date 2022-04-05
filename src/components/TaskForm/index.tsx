@@ -7,6 +7,7 @@ interface Props {
   taskList: ITask[],
   setTaskList?: React.Dispatch<React.SetStateAction<ITask[]>>,
   task?: ITask | null
+  handleUpdate?(id: number, title: string, difficulty: number): void
 }
 
 const TaskForm = (props: Props) => {
@@ -24,13 +25,17 @@ const TaskForm = (props: Props) => {
 
   const addTaskHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const id = Math.floor(Math.random() * 1000);
-    const newTask: ITask = {id, title, difficulty};
-
-    props.setTaskList!([...props.taskList, newTask]);
-
-    setTitle('');
-    setDifficulty(0);
+    if(props.handleUpdate){
+      props.handleUpdate(id, title, difficulty);
+    } else {
+      const id = Math.floor(Math.random() * 1000);
+      const newTask: ITask = {id, title, difficulty};
+  
+      props.setTaskList!([...props.taskList, newTask]);
+  
+      setTitle('');
+      setDifficulty(0);
+    }
   }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
